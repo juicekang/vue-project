@@ -36,7 +36,10 @@ const handleReset = () => {
       <button type="button" @click="handleReset">초기화 하기</button>
     </form>
     <ul>
-      <li v-for="movie in movies" :key="movie.imdbID">{{ movie.Title }}, {{ movie.Year }}</li>
+      <li v-for="movie in movies" :key="movie.imdbID">
+        <input type="checkbox" :id="movie.imdbID" />
+        <label :for="movie.imdbID">{{ movie.Title }}, {{ movie.Year }}</label>
+      </li>
     </ul>
     <p v-if="!movies.length">검색 결과가 없어요..</p>
   </main>
