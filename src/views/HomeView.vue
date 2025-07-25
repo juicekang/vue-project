@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import movieAPI from '@/lib/axios'
 const movies = ref([])
 const searchWord = ref('')
@@ -22,13 +22,18 @@ const handleSubmit = (e) => {
   e.preventDefault()
   searchMovies()
 }
+const handleReset = () => {
+  movies.value = []
+  searchWord.value = ''
+}
 </script>
 
 <template>
   <main>
     <form @submit="handleSubmit">
-      <input type="text" v-model="searchWord" />
+      <input type="text" v-model="searchWord" placeholder="영화 제목을 입력하세요" />
       <button type="submit">검색하기</button>
+      <button type="button" @click="handleReset">초기화 하기</button>
     </form>
     <ul>
       <li v-for="movie in movies" :key="movie.imdbID">{{ movie.Title }}, {{ movie.Year }}</li>
