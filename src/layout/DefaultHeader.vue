@@ -1,5 +1,5 @@
 <template>
   <header>
-    <h1>헤더입니다</h1>
+    <h1>영화 검색하기</h1>
   </header>
 </template>
