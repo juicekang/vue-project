@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import movieAPI from '@/lib/axios'
 const movies = ref([])
 const searchWord = ref('')
+const savedMovies = ref([])
 const searchMovies = async () => {
   if (!searchWord.value) return
   try {
@@ -26,6 +27,11 @@ const handleReset = () => {
   movies.value = []
   searchWord.value = ''
 }
+const saveMovie = (e) => {
+  e.preventDefault()
+  console.log(savedMovies)
+  return savedMovies
+}
 </script>
 
 <template>
@@ -35,12 +41,23 @@ const handleReset = () => {
       <button type="submit">검색하기</button>
       <button type="button" @click="handleReset">초기화 하기</button>
     </form>
-    <ul>
-      <li v-for="movie in movies" :key="movie.imdbID">
-        <input type="checkbox" :id="movie.imdbID" />
-        <label :for="movie.imdbID">{{ movie.Title }}, {{ movie.Year }}</label>
-      </li>
-    </ul>
     <p v-if="!movies.length">검색 결과가 없어요..</p>
+
+    <form @submit="saveMovie">
+      <ul>
+        <li v-for="movie in movies" :key="movie.imdbID">
+          <input type="checkbox" :id="movie.imdbID" :value="movie.Title" v-model="savedMovies" />
+          <label :for="movie.imdbID">{{ movie.Title }}, {{ movie.Year }}</label>
+          <img :src="movie.Poster" alt="" />
+        </li>
+      </ul>
+      <button type="submit">저장하기</button>
+      <h2>내가 본 영화들</h2>
+      <ul>
+        <li v-for="(item, index) in savedMovies" :key="item.index">
+          {{ item }}
+        </li>
+      </ul>
+    </form>
   </main>
 </template>
